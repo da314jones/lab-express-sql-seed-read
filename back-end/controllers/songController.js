@@ -4,28 +4,13 @@ const { checkName, checkBoolean } = require("../validations/checkSongs.js")
 const songs = express.Router();
 
 songs.get("/", async (req, res) => {
-    try {
-        const sqlQuery = 'SELECT * FROM songs';
-
-        console.log("Attempting to fetch all songs"); 
-        
-        const allSongs = await getAllSongs();
-        
-        console.log("Fetched all songs", allSongs); 
-
-        if (allSongs[0]) {
-            console.log("Sending success response"); 
-            res.status(200).json({ success: true, data: { payload: allSongs } });
-        } else {
-            console.log("Sending error response: Failed to get all songs."); 
-            res.status(500).json({ success: false, data: { error: "Failed to get all songs." } });
-        }
-    } catch (error) {
-        console.log("An error occurred:", error); 
-        res.status(500).json({ success: false, data: { error: "An error occurred." } });
+    const allSongs = await getAllSongs();
+    if(allSongs[0]) {
+        res.status(200).json({ success: true, data: {payload: allSongs}});
+    } else {
+        res.status(500).json({success: false, data: {error: "Failed to get all songs."}})
     }
 });
-
 
 songs.get("/:id", async (req, res) => {
     const { id } = req.params
