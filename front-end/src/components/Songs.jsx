@@ -1,38 +1,37 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-const API = process.env.VITE_API_URL
+import Song from "./Song";
+const API = process.env.REACT_APP_API
+
 
 export default function Songs()  {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
    fetch(`${API}/songs`)
-   console.log(API)
    .then((res) => res.json())
-   .then((songsData) => 
-   console.log(songs),
-    setSongs(songs)
-   )
+   .then((results) => {
+    const { payload: songsData } = results.data;
+    setSongs(songsData)   })
    .catch((err) => {console.log("Fetch error")})
-  }, [songs])
+  }, [])
 
   return (
-    <tr>
-      <td>
-        {songs.is_favorite ? (
-          <span>⭐️</span>
-        ) : (
-          <span>&nbsp;&nbsp;&nbsp;</span>
-        )}
-      </td>
-    <td style={{ cursor: "alias" }}>
-        <a href={songs.album} target="_blank" rel="noreferrer">
-          {songs.name}
-        </a>
-      </td>
-      <td>
-        <Link to={`/songs/${songs.id}`}>✏️</Link>
-      </td>
-    </tr>
+    <div className="songs">
+      <section>
+        <table>
+          <thead>
+            <tr>
+              <th>Album</th>
+              <th>Favorite</th>
+            </tr>
+          </thead>
+          <tbody>
+            {songs.map((song, index) => (
+              <Song key={index} song={song} index={index} />
+            ))}
+          </tbody>
+        </table>
+      </section>
+    </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Songs from "./components/Songs";
+import SongsDetail from "./components/SongsDetail";
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
     </div>
       <Routes>
       <Route path="/" element={<Songs />} />
+      <Route path="/songs/:id" element={<SongsDetail />} />
     </Routes>
     </Router>
   );
