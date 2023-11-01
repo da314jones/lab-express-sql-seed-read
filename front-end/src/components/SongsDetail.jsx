@@ -7,19 +7,25 @@ const API = process.env.REACT_APP_API;
 export default function SongsDetail() {
   const [song, setSong] = useState({});
   let { id } = useParams();
+  const params = useParams();
+   console.log('Params:', params);
   let navigate = useNavigate();
   
   useEffect(() => {
+    console.log("Current ID:", id);
     fetch(`${API}/songs/${id}`)
       .then((res) => res.json())
       .then((results) => {
-        const { payload: songsData } = results.data;
-        setSong(songsData);
-      })
+        if (results && results.name) {
+        console.log("Server Response:", results); 
+        setSong(results);
+     } else {
+        console.error("Failed to fetch song:", results);
+     }   })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [id]);
 
   const handleDelete = () => {
     const httpOptions = { method: "DELETE" };
@@ -32,7 +38,9 @@ export default function SongsDetail() {
       .catch((err) => console.log(err));
   };
 
-
+if (!song) {
+    return <div>Songs loading...</div>
+}
 
   return (
     <Card>
