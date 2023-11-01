@@ -1,19 +1,21 @@
 import { useState, useEffect } from "react";
 import Song from "./Song";
-const API = process.env.REACT_APP_API
+const API = process.env.REACT_APP_API;
 
-
-export default function Songs()  {
+export default function Songs() {
   const [songs, setSongs] = useState([]);
 
   useEffect(() => {
-   fetch(`${API}/songs`)
-   .then((res) => res.json())
-   .then((results) => {
-    const { payload: songsData } = results.data;
-    setSongs(songsData)   })
-   .catch((err) => {console.log("Fetch error")})
-  }, [])
+    fetch(`${API}/songs`)
+      .then((res) => res.json())
+      .then((results) => {
+        const { payload: songsData } = results.data;
+        setSongs(songsData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="songs">
