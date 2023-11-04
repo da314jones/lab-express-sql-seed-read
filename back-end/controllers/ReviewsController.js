@@ -45,7 +45,7 @@ reviews.post("/", async (req, res) => {
     }
 });
 
-reviews.delete("/:reviews_id", async (req,res) => {
+reviews.delete("/:review_id", async (req,res) => {
     try {
         const { review_id } = req.params;
         const deletedReview = await deleteReview(review_id);

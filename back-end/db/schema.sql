@@ -1,5 +1,7 @@
 DROP DATABASE IF EXISTS songs_dev;
+
 CREATE DATABASE songs_dev;
+
 
 \c songs_dev;
 
@@ -10,7 +12,7 @@ CREATE TABLE songs (
     album TEXT,
     time TEXT,
     is_favorite BOOLEAN
-)
+);
 
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
@@ -19,6 +21,6 @@ CREATE TABLE reviews (
     content TEXT,
     rating NUMERIC,
     CHECK (rating >= 0 AND rating <= 5),
-    song_id INTEGER REFERENCES songs (id)
-    ON DELETE CASCADE
+    song_id INTEGER REFERENCES songs (id) ON DELETE CASCADE
 );
+

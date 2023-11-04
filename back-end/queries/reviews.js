@@ -1,10 +1,10 @@
 const db = require("../db/dbConfig.js");
 
-const getAllReviews = async (songs_id) => {
+const getAllReviews = async (song_id) => {
     try {
         /*Query to 'SELECT' all columns from the reviews table that match song id 'await' response store results in allReviews*/
-        const allReviews = await db.any("SELECT * FROM reviews WHERE songs_id=$1",
-        songs_id
+        const allReviews = await db.any("SELECT * FROM reviews WHERE song_id=$1",
+        song_id
         );
         return allReviews
     } catch(err) {
@@ -24,15 +24,16 @@ const getOneReview = async (id) => {
 
 const deleteReview = async (id) => {
     try {
-        const deletedReview = await db.one('SELECT 8 FROM WHERE id=$1 RETURNING *', id);
+        const deletedReview = await db.one('DELETE from reviews WHERE id=$1 RETURNING *', id);
         return deletedReview
     } catch (err) {
         return err
     }
 }
 
-const createReview = async () => {
+const createReview = async (song_id, review) => {
     try {
+        const { reviewer, rating, content, title } = review;
         const createdReview = await db.one('INSERT INTO reviews (reviewer, rating, content, title, song_id) VALUES ($1, $2, $3, $4, $5) RETURNING *', [reviewer, rating, content, title, song_id]
         );
         return createdReview
@@ -46,7 +47,7 @@ const updateReview = async (review) => {
         /* destructure review object extracts values and assign constants to them with the following properties:*/
         const { reviewer, rating, content, title,id, song_id } = review;
         /*stores the results of the operation query and return just 1 row from the db*/
-        const updatedReview = await db.one('UPDATE reviews SET reviewer=$1, rating=$2, content=$3, title$4, song_$5, WHERE id=$6 RETURNING *', 
+        const updatedReview = await db.one('UPDATE reviews SET reviewer=$1, rating=$2, content=$3, title=$4, song_id=$5 WHERE id=$6 RETURNING *', 
         /*updates the table setting the columns to the following values where the id matches the id variable then returning the entire updated row*/
         [reviewer, rating, content, title, song_id, id])
     } catch (err) {
