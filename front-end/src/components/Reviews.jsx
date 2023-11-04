@@ -8,19 +8,16 @@ const API = process.env.REACT_APP_API;
 
 
 export default function Reviews() {
-    const [reviews, setReviews] = useState();
+    const [reviews, setReviews] = useState([]);
     let { id } = useParams();
 
     useEffect(() => {
         fetch(`${API}/songs/${id}/reviews`)
-          .then((res) => res.json())
-          .then((results) => {
-            const { payload: reviewsData } = results.data;
-            setReviews(reviewsData);
+          .then((response) => response.json())
+          .then((responseJSON) => {
+            setReviews(responseJSON.allReviews);
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch((error) => console.log(error));
       }, [id, API]);
 
       const handleAdd = (newReview) => {
@@ -39,7 +36,7 @@ export default function Reviews() {
       };
 
       const handleDelete = (reviewId) => {
-        fetch(`${API}/songs/${id}/reviews`${reviewId}, { method: "DELETE" })
+        fetch(`${API}/songs/${id}/reviews/${reviewId}`, { method: "DELETE" })
         .then((response) => {
             const copyReviewArray = [...reviews];
             const indexDeletedReviews = copyReviewArray.findIndex((review) => review.id === reviewId);
@@ -56,7 +53,7 @@ export default function Reviews() {
     const handleEdit = (updatedReview) => {
         fetch(`${API}/songs/${id}/reviews/${updatedReview.id}`, {
             method: "PUT",
-            body: JSON>stringify(updatedReview),
+            body: JSON.stringify(updatedReview),
             headers: { "Content-Type": "application/json" },
         })
         .then((response) => response.json())
@@ -82,3 +79,17 @@ export default function Reviews() {
     </section>
   )
 }
+
+
+
+// useEffect(() => {
+//     fetch(`${API}/songs/${id}/reviews`)
+//       .then((res) => res.json())
+//       .then((results) => {
+//         const { payload: reviewsData } = results.data;
+//         setReviews(reviewsData);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }, [id, API]);
