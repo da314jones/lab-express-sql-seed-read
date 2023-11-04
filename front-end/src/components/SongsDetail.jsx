@@ -7,8 +7,9 @@ const API = process.env.REACT_APP_API;
 export default function SongsDetail() {
   const [song, setSong] = useState({});
   let { id } = useParams();
-  const params = useParams();
-   console.log('Params:', params);
+  //logged the params and received 0 as an id and realized that its checking for index instead of id made necessary adjustments
+  const params = useParams(); 
+  console.log('Params:', params);
   let navigate = useNavigate();
   
   useEffect(() => {
@@ -16,7 +17,8 @@ export default function SongsDetail() {
     fetch(`${API}/songs/${id}`)
       .then((res) => res.json())
       .then((results) => {
-        if (results && results.name) {
+        //check for data or name for future queries songData wasn't returning data data coming back in result without destructuring  
+        if (results && results.name) { 
         console.log("Server Response:", results); 
         setSong(results);
      } else {

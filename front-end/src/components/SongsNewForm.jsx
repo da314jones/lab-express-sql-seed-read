@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 const API = process.env.REACT_APP_API;
 
 
-const SongsNewForm = () => {
+export default function SongsNewForm() {
     const navigate = useNavigate();
     const [song, setSong] = useState({
         name: "",
@@ -93,4 +93,3 @@ const SongsNewForm = () => {
     );
 }
 
-export default SongsNewForm;

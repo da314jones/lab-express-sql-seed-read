@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 const API = process.env.REACT_APP_API;
 
-const SongsEditForm = () => {
+export default function SongsEditForm() {
   const navigate = useNavigate();
   const { id } = useParams();
 
@@ -109,4 +109,3 @@ const SongsEditForm = () => {
   );
 };
 
-export default SongsEditForm;

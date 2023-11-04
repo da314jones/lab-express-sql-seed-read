@@ -29,7 +29,7 @@ export default function Songs() {
           </thead>
           <tbody>
             {songs.map((song, index) => (
-              <Song key={song.id} song={song}  />
+              <Song key={song.id} song={song}  /> //changed this line from index to song.id
             ))}
           </tbody>
         </table>
