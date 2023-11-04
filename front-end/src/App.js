@@ -2,9 +2,9 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Songs from "./components/Songs";
-import SongsDetail from "./components/SongsDetail";
-import SongsEditForm from "./components/SongsEditForm";
-import SongsNewForm from "./components/SongsNewForm"
+import SongsDetail from "./components/SongDetails";
+import SongsEditForm from "./components/SongEditForm";
+import SongsNewForm from "./components/SongNewForm"
 import NavBar from "./components/NavBar";
 
 function App() {
